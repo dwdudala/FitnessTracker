@@ -7,9 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import pl.wsb.fitnesstracker.training.internal.ActivityType;
-import pl.wsb.fitnesstracker.user.api.User;
-
-import java.util.Date;
+import pl.wsb.fitnesstracker.user.internal.User;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "trainings")
@@ -28,10 +27,10 @@ public class Training {
     private User user;
 
     @Column(name = "start_time", nullable = false)
-    private Date startTime;
+    private LocalDate startTime;
 
     @Column(name = "end_time", nullable = false)
-    private Date endTime;
+    private LocalDate endTime;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "activity_type", nullable = false)
@@ -45,8 +44,8 @@ public class Training {
 
     public Training(
             final User user,
-            final Date startTime,
-            final Date endTime,
+            final LocalDate startTime,
+            final LocalDate endTime,
             final ActivityType activityType,
             final double distance,
             final double averageSpeed) {

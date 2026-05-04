@@ -1,4 +1,4 @@
-package pl.wsb.fitnesstracker.user.api;
+package pl.wsb.fitnesstracker.user.internal;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -27,8 +27,8 @@ public class User {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "birthdate", nullable = false)
-    private LocalDate birthdate;
+    @Column(name = "birthday", nullable = false) // Zmienione z birthdate na birthday
+    private LocalDate birthday;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -36,11 +36,11 @@ public class User {
     public User(
             final String firstName,
             final String lastName,
-            final LocalDate birthdate,
+            final LocalDate birthday,
             final String email) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdate = birthdate;
+        this.birthday = birthday;
         this.email = email;
     }
 

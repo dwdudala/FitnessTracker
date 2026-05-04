@@ -10,7 +10,7 @@ import pl.wsb.fitnesstracker.event.Event;
 import pl.wsb.fitnesstracker.event.EventRepository;
 import pl.wsb.fitnesstracker.event.UserEvent;
 import pl.wsb.fitnesstracker.event.UserEventRepository;
-import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.internal.User;
 
 import java.time.LocalDate;
 import java.util.List;
