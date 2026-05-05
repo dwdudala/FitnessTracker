@@ -13,6 +13,7 @@ import pl.wsb.fitnesstracker.event.UserEventRepository;
 import pl.wsb.fitnesstracker.user.internal.User;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -57,13 +58,13 @@ class Lab03RepositoryTest {
      */
     @Test
     void findUpcomingReturnsOnlyFutureEvents() {
-        Event past = new Event("Past Event", LocalDate.now().minusDays(1), "Warsaw");
-        Event future = new Event("Future Event", LocalDate.now().plusDays(1), "Krakow");
+        Event past = new Event("Past Event", LocalDateTime.now().minusDays(1), "Warsaw");
+        Event future = new Event("Future Event", LocalDateTime.now().plusDays(1), "Krakow");
         em.persist(past);
         em.persist(future);
         em.flush();
 
-        List<Event> result = eventRepository.findUpcoming(LocalDate.now());
+        List<Event> result = eventRepository.findUpcoming(LocalDateTime.now());
 
         assertThat(result).extracting(Event::getName).containsExactly("Future Event");
     }
@@ -78,12 +79,12 @@ class Lab03RepositoryTest {
     void countParticipantsReturnsRegistrationCount() {
         User u1 = new User("John", "Doe", LocalDate.of(1990, 1, 1), "john.doe@test.com");
         User u2 = new User("Jane", "Doe", LocalDate.of(1992, 2, 2), "jane.doe@test.com");
-        Event event = new Event("Marathon", LocalDate.now().plusDays(7), "Gdansk");
+        Event event = new Event("Marathon", LocalDateTime.now().plusDays(7), "Gdansk");
         em.persist(u1);
         em.persist(u2);
         em.persist(event);
-        em.persist(new UserEvent(u1, event));
-        em.persist(new UserEvent(u2, event));
+        em.persist(new UserEvent(u1, event, LocalDateTime.now()));
+        em.persist(new UserEvent(u2, event, LocalDateTime.now()));
         em.flush();
 
         long count = userEventRepository.countParticipants(event.getId());
