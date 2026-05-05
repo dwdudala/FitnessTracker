@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserEventRepository extends JpaRepository<UserEvent, Long> {
 
-    @Query("SELECT count(ue) FROM UserEvent ue WHERE ue.event.id = :eventId")
+    @Query(value = "SELECT COUNT(*) FROM user_event WHERE event_id = :eventId", nativeQuery = true)
     long countParticipants(@Param("eventId") Long eventId);
 
 }

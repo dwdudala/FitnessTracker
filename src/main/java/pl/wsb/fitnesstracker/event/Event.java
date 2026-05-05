@@ -8,10 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "events")
+@Table(name = "event")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,11 +23,11 @@ public class Event {
     private Long id;
 
     private String name;
-    private LocalDate startDate;
+    private LocalDateTime startDate;
     private String location;
 
     // Konstruktor dla testu (bez ID)
-    public Event(String name, LocalDate startDate, String location) {
+    public Event(String name, LocalDateTime startDate, String location) {
         this.name = name;
         this.startDate = startDate;
         this.location = location;

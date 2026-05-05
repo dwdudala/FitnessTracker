@@ -4,8 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Objects;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import java.util.List;
 
-interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
      * Query searching users by email address. It matches by exact match.
@@ -17,6 +20,10 @@ interface UserRepository extends JpaRepository<User, Long> {
         return findAll().stream()
                 .filter(user -> Objects.equals(user.getEmail(), email))
                 .findFirst();
+
     }
+    @Query(value = "SELECT * FROM users WHERE email LIKE %:domain", nativeQuery = true)
+    List<User> findByEmailDomain(@Param("domain") String domain);
+
 
 }

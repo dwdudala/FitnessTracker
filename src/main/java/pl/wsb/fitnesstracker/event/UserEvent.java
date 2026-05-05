@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.wsb.fitnesstracker.user.internal.User;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "user_events")
+@Table(name = "user_event")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,9 +27,11 @@ public class UserEvent {
     @ManyToOne
     private Event event;
 
+    private LocalDateTime registrationDate;
     // Konstruktor dla testu
-    public UserEvent(User user, Event event) {
+    public UserEvent(User user, Event event, LocalDateTime registrationDate) {
         this.user = user;
         this.event = event;
+        this.registrationDate = registrationDate;
     }
 }
