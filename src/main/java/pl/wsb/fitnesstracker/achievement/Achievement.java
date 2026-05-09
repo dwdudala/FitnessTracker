@@ -1,12 +1,17 @@
 package pl.wsb.fitnesstracker.achievement;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.wsb.fitnesstracker.user.internal.User;
-//import pl.wsb.fitnesstracker.user.api.User;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "achievements")
+@Getter // <--- Dopisujesz to
+@Setter // <--- Dopisujesz to
+@NoArgsConstructor // <--- Dopisujesz to (zastępuje pusty konstruktor)
 public class Achievement {
 
     @Id
@@ -18,11 +23,8 @@ public class Achievement {
     private LocalDateTime earnedAt;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
-
-    // Bezargumentowy konstruktor wymagany przez JPA
-    protected Achievement() {
-    }
 
     public Achievement(String name, LocalDateTime earnedAt, User user) {
         this.name = name;

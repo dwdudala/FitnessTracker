@@ -5,6 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import pl.wsb.fitnesstracker.user.internal.User;
+import pl.wsb.fitnesstracker.achievement.Achievement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -35,6 +40,8 @@ class Lab03EntitiesTest {
 
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private TestEntityManager em; // To jest potrzebne, żeby em.persist() działało
 
     @Test
     void shouldHaveEventTable() throws Exception {
@@ -114,5 +121,25 @@ class Lab03EntitiesTest {
             }
         }
         return cols;
+    }
+    @Test
+    void achievementEntityIsPersistedCorrectly() {
+        // Given
+        User user = new User("Robert", "Test", LocalDate.of(1990, 1, 1), "robert@test.com");
+        em.persist(user);
+
+        // Używamy nazwy pola 'earnedAt', którą masz w swojej encji
+        Achievement achievement = new Achievement("First Marathon", LocalDateTime.now(), user);
+
+        // When
+        em.persist(achievement);
+        em.flush();
+        em.clear();
+
+        // Then
+        Achievement found = em.find(Achievement.class, achievement.getId());
+        assertThat(found).isNotNull();
+        assertThat(found.getName()).isEqualTo("First Marathon");
+        assertThat(found.getUser().getEmail()).isEqualTo("robert@test.com");
     }
 }
